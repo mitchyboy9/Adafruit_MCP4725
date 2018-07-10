@@ -17,6 +17,7 @@
 	@section  HISTORY
 
     v1.0  - First release
+    v1.0.1 - Some improvments (Haroldo Amaral - agaelema)
 */
 /**************************************************************************/
 
@@ -28,24 +29,25 @@
 
 #include <Wire.h>
 
-#define MCP4726_CMD_WRITEDAC                0x40  // Writes data to the DAC
-#define MCP4726_CMD_WRITEDACEEPROM          0x60  // Writes data to the DAC and the EEPROM (persisting the assigned value after reset)
-#define MCP4725_OUTPUT_LOAD_RESISTANCE_1K   0
-#define MCP4725_OUTPUT_LOAD_RESISTANCE_100K 1
-#define MCP4725_OUTPUT_LOAD_RESISTANCE_500K 2
-#define MCP4725_ADDRESS_PIN_DISABLED        255
+#define MCP4726_CMD_WRITEDAC                	0x40  // Writes data to the DAC
+#define MCP4726_CMD_WRITEDACEEPROM          	0x60  // Writes data to the DAC and the EEPROM (persisting the assigned value after reset)
+#define MCP4725_OUTPUT_LOAD_RESISTANCE_1K   	0
+#define MCP4725_OUTPUT_LOAD_RESISTANCE_100K 	1
+#define MCP4725_OUTPUT_LOAD_RESISTANCE_500K 	2
+#define MCP4725_ADDRESS_PIN_DISABLED        	255
 
-class Adafruit_MCP4725{
- public:
-  Adafruit_MCP4725(uint8_t addressPin = MCP4725_ADDRESS_PIN_DISABLED);
-  void begin(uint8_t a);  
-  void setVoltage(uint16_t output, bool writeEEPROM);
-  float setNearestActualVoltage(uint16_t desiredOutputMilliVolts, uint16_t vrefMilliVolts, bool writeEEPROM);
-  void powerDown(uint8_t loadResistance, bool writeEEPROM);
+class Adafruit_MCP4725
+{
+  public:
+    Adafruit_MCP4725(uint8_t addressPin = MCP4725_ADDRESS_PIN_DISABLED);
+    void begin(uint8_t a);
+    void setVoltage(uint16_t output, bool writeEEPROM);
+    float setNearestActualVoltage(uint16_t desiredOutputMilliVolts, uint16_t vrefMilliVolts, bool writeEEPROM);
+    void powerDown(uint8_t loadResistance, bool writeEEPROM);
 
- private:
-  uint8_t _i2caddr;
-  uint8_t _addressPin;
+  private:
+    uint8_t _i2caddr;
+    uint8_t _addressPin;
 
   void writeI2cPacket(uint8_t controlBits, uint16_t data);
   void setAddressPin(bool enable);
